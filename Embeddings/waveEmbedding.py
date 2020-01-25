@@ -7,7 +7,7 @@ def getEmbedding(filenames):
 
     #find the shortest file length
     for file in filenames:
-        a = wave.open(file, mode="rb")
+        a = wave.openfp(file, mode="rb")
         try:
             shortest
         except NameError:
@@ -22,7 +22,7 @@ def getEmbedding(filenames):
 
     #embed each file at the shortest length
     for file in filenames:
-        a = wave.open(file, mode="rb")
+        a = wave.openfp(file, mode="rb")
         b = a.readframes(shortest)
         output.append(b)
 
