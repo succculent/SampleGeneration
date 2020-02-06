@@ -11,7 +11,7 @@ filenames = []
 for filename in os.listdir(path):
     filenames.append(path+filename)
 
-embeddings = Embeddings.waveEmbedding.getEmbedding(filenames)
+embeddings, output_length = Embeddings.waveEmbedding.getEmbedding(filenames)
 
 length = len(embeddings)
 
