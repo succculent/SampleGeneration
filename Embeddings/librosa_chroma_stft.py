@@ -14,7 +14,7 @@ def getEmbedding(filenames):
         x , y = librosa.load(path)
         loaded.append(x)
         sr.append(y)
-
+p
     maxLen = 0
     for x in loaded:
         if (len(x) > maxLen):
