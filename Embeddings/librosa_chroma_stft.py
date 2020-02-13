@@ -45,4 +45,6 @@ def getEmbedding(filenames):
     data = np.rollaxis(data,-1)
     data = np.expand_dims(data, axis=0)
 
+    label = np.array(label)
+
     return data, label, maxLen

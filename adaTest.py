@@ -1,5 +1,6 @@
 import os
-from tensorflow import 
+from tensorflow.keras.models import Model 
+from tensorflow.keras.layers import Input, Conv2D, MaxPool2D, Dense, Flatten
 import Embeddings.librosa_chroma_stft
 
 #read in files
@@ -13,11 +14,6 @@ data, label, maxLen = Embeddings.librosa_chroma_stft.getEmbedding(filenames)
 
 print(data.shape)
 print(len(label))
-
-
-#print(maxLen.shape)
-
-
 
 def cnn():
   inputs = Input(shape=(30, 12, 22))
@@ -38,3 +34,6 @@ def cnn():
   return model
 
 model = cnn()
+
+model.compile(optimizer='Adam', loss='categorical_crossentropy')
+model.fit(data, label)
