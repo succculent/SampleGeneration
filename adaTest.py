@@ -12,8 +12,8 @@ for filename in os.listdir(path):
 
 data, label, maxLen = Embeddings.librosa_chroma_stft.getEmbedding(filenames)
 
-print(data.shape)
-print(len(label))
+#print(data.shape)
+#print(label.shape)
 
 def cnn():
   inputs = Input(shape=(30, 12, 22))
@@ -30,10 +30,9 @@ def cnn():
   logits = Dense(maxLen, activation="softmax")(dense1)
 
   model = Model(inputs, logits)
-  model.summary()
   return model
 
 model = cnn()
 
-model.compile(optimizer='Adam', loss='categorical_crossentropy')
+model.compile(optimizer='Adam', loss='categorical_crossentropy', verbose=0)
 model.fit(data, label)
