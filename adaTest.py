@@ -1,4 +1,5 @@
 import os
+from tensorflow import 
 import Embeddings.librosa_chroma_stft
 
 #read in files
@@ -12,5 +13,6 @@ data, label, maxLen = Embeddings.librosa_chroma_stft.getEmbedding(filenames)
 
 print(data.shape)
 print(len(label))
-#print(maxLen.shape)
 
+
+#print(maxLen.shape)
