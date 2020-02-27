@@ -68,5 +68,3 @@ for i in range(0, len(padded)):
 	plt.ylabel('Frequency [Hz]')
 	plt.xlabel('Time [sec]')
 	plt.show()
-
-
