@@ -1,6 +1,9 @@
 import os
 import librosa
 import numpy as np
+from scipy import signal
+from scipy.fft import fftshift
+import matplotlib.pyplot as plt
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Dense, Conv1D, Flatten, LSTM
 
@@ -57,3 +60,13 @@ data = np.dstack((padded))
 data = np.rollaxis(data,-1)
 data = np.expand_dims(data, axis=0)
 print(data.shape)
+
+#creating the spectrograms for each wav file
+for i in range(0, len(padded)):
+	_, _, Sxx = signal.spectrogram(padded[i], sr[i])
+	plt.pcolormesh(_, _, Sxx)
+	plt.ylabel('Frequency [Hz]')
+	plt.xlabel('Time [sec]')
+	plt.show()
+
+
