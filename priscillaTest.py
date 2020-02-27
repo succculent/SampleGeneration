@@ -2,7 +2,7 @@ import os
 import librosa
 import numpy as np
 from scipy import signal
-from scipy.fft import fftshift
+#from numpy.fft import fftshift
 import matplotlib.pyplot as plt
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Dense, Conv1D, Flatten, LSTM
@@ -29,42 +29,44 @@ for x in loaded:
 	if (len(x) > maxLen):
 		maxLen = len(x)
 
-'''
+
 #pads audio time series to be the same length
 for x in loaded:
 	x = np.pad(x, (0, maxLen-len(x)))
-'''
+
 
 #extracts features from each audio time series and loads into extracted
 #also finds the largest shape of extracted data
-extracted = []
-maxLena = 0
-maxLenb = 0
-for x in range(0, len(sr)):
-	extracted.append(librosa.feature.chroma_stft(loaded[x], sr[x]))
-	a, b = extracted[x].shape
-	if (a > maxLena):
-		maxLena = a
-	if (b > maxLenb):
-		maxLenb = b
+# extracted = []
+# maxLena = 0
+# maxLenb = 0
+# for x in range(0, len(sr)):
+# 	extracted.append(librosa.feature.chroma_stft(loaded[x], sr[x]))
+# 	a, b = extracted[x].shape
+# 	if (a > maxLena):
+# 		maxLena = a
+# 	if (b > maxLenb):
+# 		maxLenb = b
 
-padded = []
-#pads extracted data
-for x in extracted:
-	a, b = x.shape
-	x = np.pad(x, ((0,0), (maxLena-a,maxLenb-b)))
-	padded.append(x)
+# padded = []
+# #pads extracted data
+# for x in extracted:
+# 	a, b = x.shape
+# 	x = np.pad(x, ((0,0), (maxLena-a,maxLenb-b)))
+# 	padded.append(x)
 
-label = loaded
-data = np.dstack((padded))
-data = np.rollaxis(data,-1)
-data = np.expand_dims(data, axis=0)
-print(data.shape)
+# label = loaded
+# data = np.dstack((padded))
+# data = np.rollaxis(data,-1)
+# data = np.expand_dims(data, axis=0)
+# print(data.shape)
 
 #creating the spectrograms for each wav file
-for i in range(0, len(padded)):
-	_, _, Sxx = signal.spectrogram(padded[i], sr[i])
-	plt.pcolormesh(_, _, Sxx)
-	plt.ylabel('Frequency [Hz]')
-	plt.xlabel('Time [sec]')
-	plt.show()
+data = []
+for i in range(0, len(loaded)):
+	_, _, Sxx = signal.spectrogram(loaded[i], sr[i])
+	data.append(Sxx)
+	# plt.pcolormesh(f, t, Sxx)
+	# plt.ylabel('Frequency [Hz]')
+	# plt.xlabel('Time [sec]')
+	# plt.savefig("HelpMe.jpg")

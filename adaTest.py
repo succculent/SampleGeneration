@@ -36,3 +36,7 @@ model = cnn()
 
 model.compile(optimizer='Adam', loss='categorical_crossentropy', verbose=0)
 model.fit(data, label)
+
+def encoder():
+  input = Input(shape=())
+def decoder():
