@@ -4,6 +4,7 @@ from Models.edModel import create_encoder, create_decoder
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input
 
 #read in files
 path = os.getcwd() + "/Data/"
@@ -20,7 +21,11 @@ data, sr = embed1d(filenames)
 encoding_dim = 256
 
 encoder = create_encoder(len(data[0]), encoding_dim)
-decoder = create_decoder(encoding_dim)
+decoder = create_decoder(len(data[0]), encoding_dim)
 
-model = Model(encoder, decoder)
+inputs = Input(shape=(None, len(data[0])))
+encoded = encoder(inputs)
+decoded = decoder(encoded)
+
+model = Model(inputs, decoded)
 model.summary()
