@@ -40,7 +40,6 @@ def create_decoder(input_length, encoding_dim):
     inputs = Input(shape=(None, encoding_dim))
     x = Lambda(lambda x: K.expand_dims(x, axis=2))(inputs)
     x = Conv2DTranspose(filters=256, kernel_size=(3, 1), strides=(2, 1), padding='same')(x)
-    # x = Conv2DTranspose(filters=128, kernel_size=(3, 1), strides=(2, 1), padding='same')(inputs)
     x = Lambda(lambda x: K.squeeze(x, axis=2))(x)
     x = Activation("relu")(x)
     x = Lambda(lambda x: K.expand_dims(x, axis=2))(x)
