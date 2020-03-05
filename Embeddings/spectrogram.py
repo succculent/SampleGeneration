@@ -63,11 +63,14 @@ def embed1d(filenames):
 		if (len(x) > dmax):
 			dmax = len(x)
 
-	# pads the wav file for transer to 1d network 
-	padded_data = []
-	for x in loaded:
-		tempArray = np.zeros(dmax)
-		tempArray[:len(x)] = x
-		padded_data.append(tempArray)
+	# pads the wav file for transer to 1d network
+	padded_data = np.zeros((len(filenames), 1, dmax))
+	# print(padded_data.shape)
+	for x in range(0, len(loaded)):
+		# tempArray = np.zeros(1, dmax)
+		# tempArray[:len(x)] = x
+		# print (tempArray.shape)
+		padded_data[x, 0, :len(loaded[x])] = loaded[x]
+		# print(padded_data.shape)
 
 	return padded_data, sr
