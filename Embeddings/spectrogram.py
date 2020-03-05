@@ -45,7 +45,37 @@ def embed2d(filenames):
 def embed1d(filenames):
 	'''
 	input is a list of file paths 
-	output is a list of spectrograms and a list of related sample rates
+	output is a numpy array and a list of related sample rates
+	'''
+
+	#load audio time series of each sample into loaded
+	#loads the sample rate of each sample into sr
+	loaded = []
+	sr = []
+	for path in filenames:
+		x , y = librosa.load(path)
+		loaded.append(x)
+		sr.append(y)
+
+	#finds the maximum length
+	dmax = 0
+	for x in loaded:
+		if (len(x) > dmax):
+			dmax = len(x)
+
+	dmax += 16 - (dmax%16)
+
+	# pads the wav file for transer to 1d network
+	padded_data = np.zeros((len(filenames), dmax, 1))
+	for x in range(0, len(loaded)):
+		padded_data[x, :len(loaded[x]), 0] = loaded[x]
+
+	return padded_data, sr
+
+def embed1dlist(filenames):
+	'''
+	input is a list of file paths 
+	output is a list of numpy arrays and a list of related sample rates
 	'''
 
 	#load audio time series of each sample into loaded
@@ -64,13 +94,10 @@ def embed1d(filenames):
 			dmax = len(x)
 
 	# pads the wav file for transer to 1d network
-	padded_data = np.zeros((len(filenames), 1, dmax))
-	# print(padded_data.shape)
+	padded_data = []
 	for x in range(0, len(loaded)):
-		# tempArray = np.zeros(1, dmax)
-		# tempArray[:len(x)] = x
-		# print (tempArray.shape)
-		padded_data[x, 0, :len(loaded[x])] = loaded[x]
-		# print(padded_data.shape)
+		temp = np.zeros((dmax,1))
+		temp[:len(loaded[x]), 0] = loaded[x]
+		padded_data.append(temp)
 
 	return padded_data, sr
